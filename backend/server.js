@@ -19,20 +19,20 @@ connectToDb((error) => {
     }
 });
 
+app.get("/items", async (req, res) => {
+    const items = []
 
-app.get("/items", (req, res) => {
-    let items = [];
-
-    db.collection("items")
-        .find()
-        .limit(2)
-        .forEach(item => {
-            items.push(item)
-        })
-        .then(() => {
-            res.json(items)
-        })
+    const data = await getSampledData();
+    items.push(data)
+    res.send(items[0]);
 });
+
+async function getSampledData() {
+    const response = await db.collection("items").aggregate([
+      { $sample: { size: 2 } }
+    ]).toArray();
+    return response
+  }
 
 app.patch("/update-item", (req, res) => {
     let data = req.body;
