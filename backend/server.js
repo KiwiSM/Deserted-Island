@@ -34,13 +34,16 @@ app.get("/items", (req, res) => {
         })
 });
 
-app.patch("/updateItem", (req, res) => {
+app.patch("/update-item", (req, res) => {
     let data = req.body;
-    console.log(data.data)
+    //console.log(data.items)
+    let losingItemIndex = data.items.findIndex(item => item._id === data.winningItem)
+    let losingItem = data.items;
+    losingItem.splice(losingItemIndex, 1)
 
     db.collection("items")
-        .updateOne({_id: ObjectId(data.data)}, {$inc: {wins: 1, games: 1}});
+        .updateOne({_id: ObjectId(data.winningItem)}, {$inc: {wins: 1, games: 1}});
     
     db.collection("items")
-        .updateOne({_id: ObjectId("6360ef5068f878ae78f238b3")}, {$inc: {defeats: 1, games: 1}}) 
+        .updateOne({_id: ObjectId(losingItem[0]._id)}, {$inc: {defeats: 1, games: 1}}) 
 });

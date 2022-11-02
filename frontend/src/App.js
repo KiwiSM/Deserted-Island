@@ -1,25 +1,41 @@
 import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [items, setItems] = useState([]);
 
-  async function GetItems() {
+  useEffect(() => async function GetItems(){
     const response = await fetch("http://localhost:3000/items", {
       method: "GET"
     });
     const data = await response.json();
     setItems(data);
-  };
+  }, []);
 
-  GetItems();
+  async function UpdateItem(data) {
+    console.log(items)
+    const requestObject = {
+      winningItem: data,
+      items: items
+    }
 
-  console.log(items);
+    const reponse = await fetch("http://localhost:3000/update-item", {
+      method: "PATCH",
+      body: JSON.stringify(requestObject),
+      headers: {"Content-Type" : "application/json"}
+    })
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Hej</h1>
+        {
+          items.map(element => (
+            <p key={element.name} onClick={() => UpdateItem(element._id)} alt="">
+              {element.name}
+            </p>
+          ))
+        }
       </header>
     </div>
   );
