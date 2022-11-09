@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Menu() {
     return (
-        <nav>
+        <nav className="Menu">
             <Link to={"/"}>Home</Link>
             <Link to={"/battle"}>Go battle</Link>
             <Link to={"/gallery"}>View the gallery</Link>

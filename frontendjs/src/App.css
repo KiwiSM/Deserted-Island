@@ -1,37 +1,64 @@
-.App {
+* {
+  margin: 0;
+  background-color: rgb(0, 0, 33);
+}
+
+.app {
   text-align: center;
-  background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.Container {
-  margin: 1rem;
-  width: 33%;
-}
-
-img {
-  width: 10rem;
+.menu {
+  justify-content: space-between;
   padding: 1rem;
-  background-color: white;
 }
 
 a {
   text-decoration: none;
-  color: rgb(160, 160, 160);
+  color: rgb(255, 255, 255);
   padding: 1rem;
+  font-size: 1.5rem;
 }
 
 a:hover {
+  color: black;
   background-color: white;
 }
 
-.history {
-  width: 20%;
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.tiny-wrapper {
+  margin-top: 2rem;
+  margin-left: 10rem;
+  border: 2px solid white;
+  padding: 0.5rem;
+}
+
+.hide-tiny-wrapper {
+  display: none;
+}
+
+.double-container {
+  display: flex;
+  width: 33%;
+}
+
+.container {
+  margin: 1rem;
+}
+
+img {
+  width: 10rem;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+h3 {
+  margin-left: 0.5rem;
 }

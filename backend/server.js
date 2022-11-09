@@ -57,6 +57,21 @@ app.get("/all-items", async (req, res) => {
     res.send(items[0])
 });
 
+// *** ITEM-DETAILS PAGE
+app.get("/item-details/:id", async (req, res) => {
+    const data = {
+        itemDetail: null,
+        battlesWon: null
+    }
+    //To return the clicked image
+        data.itemDetail = await db.collection("items")
+            .find({_id: ObjectId(req.params.id)}).toArray(); 
+    // To return all the battles an item has won
+        data.battlesWon = await db.collection("battles")
+            .find({'winner._id': req.params.id}).toArray();
+    res.send(data)
+})
+
 // *** STATISTICS PAGE
 app.get("/statistics", async (req, res) => {
     const winningItems = [];
@@ -106,7 +121,7 @@ app.get("/history", async (req, res) => {
     }
     const battles = await getHistory();
     res.json(battles);
-    console.log(battles);
+    //console.log(battles);
 });
 
 
@@ -127,29 +142,18 @@ app.patch("/update-item", (req, res) => {
 
     db.collection("battles")
         .insertOne({winner: {name: data.winningItem.name, imgName: data.winningItem.imgName, _id: data.winningItem._id}, loser: {name: losingItem[0].name, imgName: losingItem[0].imgName, _id: losingItem[0]._id}});
+    res.json({result: "success"});
 });
 
 // ********************************* DELETE APIs ********************************* 
 
 app.delete("/delete-item", (req, res) => {
     const data = req.body;
-    console.log(data);
+    //console.log(data);
 
     db.collection("items")
         .deleteOne({_id: ObjectId(data.item)})
+        
 })
 
 // ********************************* EXPERIMENT ********************************* 
-
-app.get("/:id", async (req, res) => {
-    /* To return the clicked image
-        const item = await db.collection("items")
-            .find({_id: ObjectId(req.params.id)}).toArray(); 
-        res.send(item) */
-    
-    // To return all the battles an item has won
-        const battles = await db.collection("battles")
-        .find({'winner._id': req.params.id}).toArray();
-    console.log(battles);
-    console.log(req.params.id);
-})

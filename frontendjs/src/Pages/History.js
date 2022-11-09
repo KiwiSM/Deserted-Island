@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Menu from "../Components/Menu";
 
 export default function History() {
     const [items, setItems] = useState();
@@ -16,23 +15,30 @@ export default function History() {
 
     return (
         <>
-            <Menu />
             <h1>Previous battles:</h1>
+            <div className="wrapper">
             {   items ?
                 items.map(element => (
-                    <div key={element._id} className='history'>
+                    <div className="tiny-wrapper">
                         <h3>BATTLE:</h3>
-                        <h6>WINNER:</h6>
-                        <p>{element.winner.name}</p>
-                        <img src={element.winner.imgName} alt="" />
-                        <p>Wins: {element.winner.wins}, Defeats: {element.winner.defeats}</p>
-                        <h6>LOSER:</h6>
-                        <p>{element.loser.name}</p>
-                        <img src={element.loser.imgName} alt="" />
-                        <p>Wins: {element.winner.wins}, Defeats: {element.winner.defeats}</p>
+                        <div key={element._id} className='double-container'>
+                            <div className="container">
+                                <h6>WINNER:</h6>
+                                <p>{element.winner.name}</p>
+                                <img src={element.winner.imgName} alt="" />
+                                <p>Wins: {element.winner.wins}, Defeats: {element.winner.defeats}</p>
+                            </div>
+                            <div className="container">
+                                <h6>LOSER:</h6>
+                                <p>{element.loser.name}</p>
+                                <img src={element.loser.imgName} alt="" />
+                                <p>Wins: {element.winner.wins}, Defeats: {element.winner.defeats}</p>
+                            </div>
+                        </div>
                     </div>
                 )) : null
             }
+            </div>
         </>
     )
 }
