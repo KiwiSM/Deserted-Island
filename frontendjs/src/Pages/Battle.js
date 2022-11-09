@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import Menu from "../Components/Menu";
 
-export default function Battle(){
+export default function Battle() {
     const [items, setItems] = useState([]);
     const [oldItems, setOldItems] = useState([]);
-  
+
     useEffect(() => async function GetItems(){
       const response = await fetch("http://localhost:3000/items", {
         method: "GET"
@@ -16,10 +17,10 @@ export default function Battle(){
       async function UpdateItem(data) {
         const requestObject = {
           winningItem: data,
-          items: items
+          losingItem: items
         }
   
-        const reponse = await fetch("http://localhost:3000/update-item", {
+        const reponse =  await fetch("http://localhost:3000/update-item", {
           method: "PATCH",
           body: JSON.stringify(requestObject),
           headers: {"Content-Type" : "application/json"}
@@ -31,6 +32,7 @@ export default function Battle(){
 
     return (
         <>
+          <Menu />
             {
                 oldItems ?
                 oldItems.map(element => (
@@ -44,7 +46,7 @@ export default function Battle(){
                 items.map(element => (
                     <div key={element._id} className='Container'>
                         <p>{element.name}</p>
-                        <img onClick={() => Update(element._id)} src={element.imgName} alt="" />
+                        <img onClick={() => Update(element)} src={element.imgName} alt="" />
                     </div>
                 ))
             }
