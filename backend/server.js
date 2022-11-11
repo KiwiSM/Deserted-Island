@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { connectToDb, getDb } = require("./db");
-const { ObjectId, LEGAL_TLS_SOCKET_OPTIONS } = require("mongodb");
+const { ObjectId } = require("mongodb");
 
 const app = express();
 
