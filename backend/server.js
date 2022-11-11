@@ -141,7 +141,7 @@ app.get("/history", async (req, res) => {
             return history
         }
         const battles = await getHistory();
-        res.status(200).json(battles);
+        res.status(200).send(battles);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -166,7 +166,7 @@ app.patch("/update-item", (req, res) => {
     
         db.collection("battles")
             .insertOne({winner: {name: data.winningItem.name, imgName: data.winningItem.imgName, _id: data.winningItem._id}, loser: {name: losingItem[0].name, imgName: losingItem[0].imgName, _id: losingItem[0]._id}});
-        res.status(200).json({result: "success"});
+        res.status(200).send({result: "success"});
     }
     catch (err) {
         res.status(500).send(err);
