@@ -4,7 +4,7 @@ export default function History() {
     const [items, setItems] = useState();
 
     useEffect(() => async function GetItems(){
-        const response = await fetch("http://localhost:3000/history", {
+        const response = await fetch("https://deserted-island.onrender.com/history", {
           method: "GET"
         });
         const data = await response.json();

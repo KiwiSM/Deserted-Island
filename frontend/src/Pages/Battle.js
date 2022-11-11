@@ -18,7 +18,7 @@ export default function Battle() {
   const [previous, setPrevious] = useState(false);
 
   useEffect(() => async function GetItems() {
-      const response = await fetch("http://localhost:3000/items", {
+      const response = await fetch("https://deserted-island.onrender.com/items", {
         method: "GET"
       });
       const data = await response.json();
@@ -32,7 +32,7 @@ export default function Battle() {
         winningItem: data,
         losingItem: items
       }
-        fetch("http://localhost:3000/update-item", {
+        fetch("https://deserted-island.onrender.com/update-item", {
         method: "PATCH",
         body: JSON.stringify(requestObject),
         headers: {"Content-Type" : "application/json"}

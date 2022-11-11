@@ -74,3 +74,12 @@ p {
   border: none;
   border-radius: 10px;
 }
+
+.delete-button {
+    padding: 0.5rem;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+}

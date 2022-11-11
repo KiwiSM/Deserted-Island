@@ -5,7 +5,7 @@ export default function Statistics() {
     const [items, setItems] = useState();
 
     useEffect(() => async function GetItems(){
-        const response = await fetch("http://localhost:3000/statistics", {
+        const response = await fetch("https://deserted-island.onrender.com/statistics", {
           method: "GET"
         });
         const data = await response.json();
