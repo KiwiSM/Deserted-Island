@@ -26,18 +26,23 @@ app.post("/post-item", (req, res) => {
 
     db.collection("items")
         .insertOne(data)
-})
+});
 
 
 // ********************************* GET APIs ********************************* 
 
 // *** BATTLE PAGE
 app.get("/items", async (req, res) => {
-    const items = []
+    try {
+        const items = []
 
-    const data = await getSampledData();
-    items.push(data)
-    res.send(items[0]);
+        const data = await getSampledData();
+        items.push(data)
+        res.status(200).send(items[0]);    
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 async function getSampledData() {
@@ -50,98 +55,122 @@ async function getSampledData() {
 
 // *** GALLERY PAGE
 app.get("/all-items", async (req, res) => {
-    const items = []
-    const data = await db.collection("items")
-        .find().toArray();
-    
-    items.push(data)
-    res.send(items[0])
+    try {
+        const items = []
+        const data = await db.collection("items")
+            .find().toArray();
+        
+        items.push(data)
+        res.status(200).send(items[0]);
+    } 
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // *** ITEM-DETAILS PAGE
 app.get("/item-details/:id", async (req, res) => {
-    const data = {
-        itemDetail: null,
-        battlesWon: null
+    try {
+        const data = {
+            itemDetail: null,
+            battlesWon: null
+        }
+        // Returns the clicked image
+            data.itemDetail = await db.collection("items")
+                .find({_id: ObjectId(req.params.id)}).toArray(); 
+        // Returns all the battles an item has won
+            data.battlesWon = await db.collection("battles")
+                .find({'winner._id': req.params.id}).toArray();
+        res.status(200).send(data);
     }
-    //To return the clicked image
-        data.itemDetail = await db.collection("items")
-            .find({_id: ObjectId(req.params.id)}).toArray(); 
-    // To return all the battles an item has won
-        data.battlesWon = await db.collection("battles")
-            .find({'winner._id': req.params.id}).toArray();
-    res.send(data)
+    catch (err) {
+        res.status(500).send(err);
+    }
 })
 
 // *** STATISTICS PAGE
 app.get("/statistics", async (req, res) => {
-    const winningItems = [];
-    const losingitems = [];
-
-    const winning = await db.collection("items")
+    try {
+        const winningItems = [];
+        const losingitems = [];
+    
+        const winning = await db.collection("items")
+            .find()
+            .sort({wins: -1})
+            .limit(5)
+            .toArray();
+    
+        const losing = await db.collection("items")
         .find()
-        .sort({wins: -1})
+        .sort({defeats: -1})
         .limit(5)
         .toArray();
-
-    const losing = await db.collection("items")
-    .find()
-    .sort({defeats: -1})
-    .limit(5)
-    .toArray();
-    
-    winningItems.push(winning);
-    losingitems.push(losing);
-    const items = [winningItems[0], losingitems[0]];
-    res.send(items);
+        
+        winningItems.push(winning);
+        losingitems.push(losing);
+        const items = [winningItems[0], losingitems[0]];
+        res.status(200).send(items);
+    }
+    catch (err) {
+        res.status(500).send(err)
+    }
 });
 
 // *** HISTORY PAGE
 app.get("/history", async (req, res) => {
-    const data = await db.collection("battles")
-        .find()
-        .toArray();
+    try {    
+        const data = await db.collection("battles")
+            .find()
+            .toArray();
 
-    async function getHistory() {
-        const history = [];
+        async function getHistory() {
+            const history = [];
 
-        for(const element of data) {
-            const battle = {
-                _id: Math.random(),
-                winner: null,
-                loser: null
+            for(const element of data) {
+                const battle = {
+                    _id: Math.random(),
+                    winner: null,
+                    loser: null
+                }
+                const winners = await db.collection("items").find({_id: ObjectId(element.winner._id)}).toArray();
+                const losers =  await db.collection("items").find({_id: ObjectId(element.loser._id)}).toArray();
+                battle.winner = winners[0];
+                battle.loser = losers[0];
+                history.push(battle)
             }
-            const winners = await db.collection("items").find({_id: ObjectId(element.winner._id)}).toArray();
-            const losers =  await db.collection("items").find({_id: ObjectId(element.loser._id)}).toArray();
-            battle.winner = winners[0];
-            battle.loser = losers[0];
-            history.push(battle)
+            return history
         }
-        return history
+        const battles = await getHistory();
+        res.status(200).json(battles);
+    } catch (err) {
+        res.status(500).send(err);
     }
-    const battles = await getHistory();
-    res.json(battles);
 });
 
 
 // ********************************* PATCH APIs ********************************* 
 
 app.patch("/update-item", (req, res) => {
-    let data = req.body;
+    try {
+        let data = req.body;
     
-    let losingItemIndex = data.losingItem.findIndex(item => item._id === data.winningItem._id)
-    let losingItem = data.losingItem;
-    losingItem.splice(losingItemIndex, 1)
-
-    db.collection("items")
-        .updateOne({_id: ObjectId(data.winningItem._id)}, {$inc: {wins: 1, games: 1}});
+        let losingItemIndex = data.losingItem.findIndex(item => item._id === data.winningItem._id)
+        let losingItem = data.losingItem;
+        losingItem.splice(losingItemIndex, 1)
     
-    db.collection("items")
-        .updateOne({_id: ObjectId(losingItem[0]._id)}, {$inc: {defeats: 1, games: 1}});
-
-    db.collection("battles")
-        .insertOne({winner: {name: data.winningItem.name, imgName: data.winningItem.imgName, _id: data.winningItem._id}, loser: {name: losingItem[0].name, imgName: losingItem[0].imgName, _id: losingItem[0]._id}});
-    res.json({result: "success"});
+        db.collection("items")
+            .updateOne({_id: ObjectId(data.winningItem._id)}, {$inc: {wins: 1, games: 1}});
+        
+        db.collection("items")
+            .updateOne({_id: ObjectId(losingItem[0]._id)}, {$inc: {defeats: 1, games: 1}});
+    
+        db.collection("battles")
+            .insertOne({winner: {name: data.winningItem.name, imgName: data.winningItem.imgName, _id: data.winningItem._id}, loser: {name: losingItem[0].name, imgName: losingItem[0].imgName, _id: losingItem[0]._id}});
+        res.status(200).json({result: "success"});
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // ********************************* DELETE APIs ********************************* 
@@ -151,7 +180,6 @@ app.delete("/delete-item", (req, res) => {
 
     db.collection("items")
         .deleteOne({_id: ObjectId(data.item)})
-        
-})
+});
 
 // ********************************* EXPERIMENT ********************************* 
