@@ -9,6 +9,7 @@ module.exports = {
         MongoClient.connect(URI)
         .then((client) => {
             dbConnection = client.db("deserted-island")
+            console.log("Connected to MongoDB Atlas");
             return cb()
         })
         .catch(error => {

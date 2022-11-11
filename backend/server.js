@@ -16,6 +16,7 @@ connectToDb((error) => {
             console.log("App listening on port 3000");
         });
         db = getDb()
+        console.log("Connected to MongoDB");
     }
 });
 
@@ -120,7 +121,6 @@ app.get("/history", async (req, res) => {
     }
     const battles = await getHistory();
     res.json(battles);
-    //console.log(battles);
 });
 
 
@@ -148,7 +148,6 @@ app.patch("/update-item", (req, res) => {
 
 app.delete("/delete-item", (req, res) => {
     const data = req.body;
-    //console.log(data);
 
     db.collection("items")
         .deleteOne({_id: ObjectId(data.item)})
