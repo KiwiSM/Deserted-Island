@@ -11,6 +11,7 @@ export default function Gallery() {
         });
         const data = await response.json();
         setItems(data);
+        console.log(data);
       }, []);
 
     function ViewItem(item) {
