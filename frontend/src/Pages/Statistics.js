@@ -12,8 +12,6 @@ export default function Statistics() {
         setItems(data);
     }, []);
 
-    console.log(items);
-
     return (
         <>
             <h1 className={Styles.h1}>Top 5 winners:</h1>

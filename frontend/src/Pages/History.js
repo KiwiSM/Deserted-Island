@@ -11,8 +11,6 @@ export default function History() {
         setItems(data);
     }, []);
 
-    console.log(items);
-
     return (
         <>
             <h1>Previous battles:</h1>

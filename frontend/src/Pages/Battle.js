@@ -22,7 +22,6 @@ export default function Battle() {
         method: "GET"
       });
       const data = await response.json();
-      console.log(data);
       setItems(data)
     }, [oldItems]);  
 
