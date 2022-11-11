@@ -37,7 +37,7 @@ app.get("/items", async (req, res) => {
 
     const data = await getSampledData();
     items.push(data)
-    res.send(items[0]);
+    res.status(202).json(items[0])
 });
 
 async function getSampledData() {
@@ -55,7 +55,7 @@ app.get("/all-items", async (req, res) => {
         .find().toArray();
     
     items.push(data)
-    res.send(items[0])
+    res.status(202).json(items[0])
 });
 
 // *** ITEM-DETAILS PAGE
