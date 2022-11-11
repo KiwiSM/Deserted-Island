@@ -6,7 +6,7 @@ let dbConnection;
 
 module.exports = {
     connectToDb: (cb) => {
-        MongoClient.connect(URI)
+        MongoClient.connect("mongodb+srv://Kiwi:Kiwi111@deserted-island.ubs0wy3.mongodb.net/?retryWrites=true&w=majority")
         .then((client) => {
             dbConnection = client.db("deserted-island")
             return cb()
