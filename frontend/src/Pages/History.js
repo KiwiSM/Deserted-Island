@@ -32,7 +32,7 @@ export default function History() {
                                 <h6>LOSER:</h6>
                                 <p>{element.loser.name}</p>
                                 <img src={element.loser.imgName} alt="" />
-                                <p>Wins: {element.winner.wins}, Defeats: {element.winner.defeats}</p>
+                                <p>Wins: {element.loser.wins}, Defeats: {element.loser.defeats}</p>
                             </div>
                         </div>
                     </div>

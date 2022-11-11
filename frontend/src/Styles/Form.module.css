@@ -1,0 +1,15 @@
+form {
+    margin-left: 2rem;
+    text-align: left;
+}
+  
+label {
+    font-size: 2rem;
+}
+
+input {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    background-color: white;
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "../Components/Form";
 
 export default function Gallery() {
     const [items, setItems] = useState();
@@ -28,6 +27,9 @@ export default function Gallery() {
 
     return (
         <>
+            <h1>Here are all the available in-game items</h1>
+            <span>Do you wish to submit another item? Fill out the form: </span> 
+            <span onClick={() => {navigate("/form")}} className="submit-item">Submit item</span>
             <div className="wrapper">
                 {   
                     items ?
@@ -40,7 +42,6 @@ export default function Gallery() {
                     )) : null
                 }
             </div>
-            <Form />
         </>
     )
 }

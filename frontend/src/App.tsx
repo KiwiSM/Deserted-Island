@@ -1,24 +1,29 @@
 import './App.css';
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './Pages/Home';
+import Battle from './Pages/Battle';
+import Gallery from './Pages/Gallery';
+import Form from './Pages/Form';
+import Statistics from './Pages/Statistics';
+import History from './Pages/History';
+import ItemDetails from './Pages/ItemDetails';
+import Menu from './Components/Menu';
 
 export default function App() {
-  const [pokemon, setPokemon] = useState<string>()
-  const [count, setCount] = useState<number>(0)
-
-  useEffect(() => {
-    async function getPokemon() {
-      const list = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151&offset=0", {
-        method: "GET"
-      })
-      const data = await list.json()
-      setPokemon(data)
-    }
-    getPokemon()
-  }, [count])
-
   return (
-    <main className="App">
-      <h1 onClick={() => setCount(count + 1)}>Hej</h1>
-    </main>
+    <BrowserRouter>
+      <Menu />
+      <main className="app">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/battle" element={<Battle />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/form" element={<Form />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/item-details/:id" element={<ItemDetails />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }

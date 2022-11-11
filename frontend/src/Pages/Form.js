@@ -1,3 +1,4 @@
+import Styles from "../Styles/Form.module.css";
 import { useRef } from "react";
 
 export default function Form() {
@@ -28,7 +29,7 @@ export default function Form() {
 
     return (
         <>
-        <form>
+        <form className="formula">
             <label htmlFor="name">Name of the item: </label><br />
             <input ref={itemName} type="text" id="name" /><br />
             <label htmlFor="age">When was the item invented? </label><br />

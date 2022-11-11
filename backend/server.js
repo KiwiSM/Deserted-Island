@@ -80,13 +80,13 @@ app.get("/statistics", async (req, res) => {
     const winning = await db.collection("items")
         .find()
         .sort({wins: -1})
-        .limit(2)
+        .limit(5)
         .toArray();
 
     const losing = await db.collection("items")
     .find()
     .sort({defeats: -1})
-    .limit(2)
+    .limit(5)
     .toArray();
     
     winningItems.push(winning);
@@ -112,7 +112,6 @@ app.get("/history", async (req, res) => {
             }
             const winners = await db.collection("items").find({_id: ObjectId(element.winner._id)}).toArray();
             const losers =  await db.collection("items").find({_id: ObjectId(element.loser._id)}).toArray();
-            //console.log("START:", "WINNER:", winners, "LOSER:", losers);
             battle.winner = winners[0];
             battle.loser = losers[0];
             history.push(battle)

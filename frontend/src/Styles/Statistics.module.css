@@ -1,0 +1,20 @@
+.tinyWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.h1 {
+    text-align: left;
+    margin: 5rem 0 0 2rem; 
+}
+
+.p {
+    margin: 1rem 0 0 1rem;
+    text-align: left;
+}
+
+.img {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}

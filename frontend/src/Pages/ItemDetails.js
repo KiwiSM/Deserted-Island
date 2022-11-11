@@ -1,3 +1,4 @@
+import Styles from "../Styles/ItemDetails.module.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -17,17 +18,17 @@ export default function ItemDetails() {
 
     return (
         <>
+        <div className="wrapper">
             {
                 item ? 
                 (
-                    <div className="double-container">
-                        <h4>{item[0].name}</h4>
-                        <h4>{item[0].age}</h4>
-                        <h5>{item[0].favUser}</h5>
+                    <div className={Styles.container}>
+                        <h2>Item: {item[0].name}</h2>
+                        <h3>Invented: {item[0].age}</h3>
+                        <h3>Favourite user: {item[0].favUser}</h3>
                         <img src={item[0].imgName} alt="" />
-                        <p>{item[0].usage}</p>
-                        <h6>{item[0].wins}</h6>
-                        <h6>{item[0].defeats}</h6>
+                        <p className={Styles.p}>Description: {item[0].usage}</p>
+                        <p className={Styles.p}>Wins: {item[0].wins} Defeats: {item[0].defeats}</p>
                     </div>
                 ) : null
             }
@@ -44,6 +45,7 @@ export default function ItemDetails() {
                     ))
                 ) : null
             }
+        </div>
         </>
     )
 }
