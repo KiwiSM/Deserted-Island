@@ -20,7 +20,7 @@ export default function Form() {
             games: 0
         }
 
-        fetch("https://deserted-island.onrender.com/post-item", {
+        fetch("https://deserted-island-front.onrender.com/post-item", {
             method: "POST",
             body: JSON.stringify(newItem),
             headers: {"Content-Type" : "application/json"}

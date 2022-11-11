@@ -6,7 +6,7 @@ export default function Gallery() {
     const navigate = useNavigate();
 
     useEffect(() => async function GetItems(){
-        const response = await fetch("https://deserted-island.onrender.com/all-items", {
+        const response = await fetch("https://deserted-island-front.onrender.com/all-items", {
           method: "GET"
         });
         const data = await response.json();
@@ -18,7 +18,7 @@ export default function Gallery() {
     }
 
     function DeleteItem(item) {
-        fetch("https://deserted-island.onrender.com/delete-item", {
+        fetch("https://deserted-island-front.onrender.com/delete-item", {
             method: "DELETE",
             body: JSON.stringify({item}),
             headers: { "Content-Type" : "application/json"}
