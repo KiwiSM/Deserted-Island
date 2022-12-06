@@ -10,6 +10,7 @@ export default function Gallery() {
           method: "GET"
         });
         const data = await response.json();
+        console.log("GALLERY::", data);
         setItems(data);
       }, []);
 
