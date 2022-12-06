@@ -17,14 +17,14 @@ export default function Battle() {
   const [oldItems, setOldItems] = useState([]);
   const [previous, setPrevious] = useState(false);
 
-  useEffect(() => async function GetItems() {
-      const response = await fetch("https://deserted-island.onrender.com/items", {
-        method: "GET"
-      });
-      const data = await response.json();
-      setItems(data)
-      console.log("START::", data);
-    }, [oldItems]);  
+  async function GetItems() {
+    const response = await fetch("https://deserted-island.onrender.com/items", {
+      method: "GET"
+    });
+    const data = await response.json();
+    setItems(data)
+    console.log("START::", data);
+  }
 
   function Update(data) {
      function UpdateItem(data) {
@@ -45,6 +45,7 @@ export default function Battle() {
 
   return (
     <>
+      <button onClick={GetItems}>Battle</button>
       <div className="wrapper">
         <div className="tiny-wrapper">
           <h2>BATTLE:</h2>
