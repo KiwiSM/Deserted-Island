@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 export default function History() {
     const [items, setItems] = useState();
 
-    useEffect(() => async function GetItems(){
-        const response = await fetch("https://deserted-island.onrender.com/history", {
-          method: "GET"
-        });
-        const data = await response.json();
-        setItems(data);
-    }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+          const response = await fetch("https://deserted-island.onrender.com/history", {
+            method: "GET"
+          });
+          const data = await response.json();
+          setItems(data);
+        }
+        fetchData();
+      }, []);
 
     return (
         <>
