@@ -8,7 +8,7 @@ export default function ItemDetails() {
     const [battles, setBattles] = useState();
 
     useEffect (() => async function ItemDetails() {
-        const response = await fetch(`https://deserted-island-front.onrender.com/item-details/${id}`, {
+        const response = await fetch(`https://deserted-island.onrender.com/item-details/${id}`, {
             method: "GET"
         });
         const item = await response.json()
