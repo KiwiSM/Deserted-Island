@@ -24,7 +24,6 @@ export default function Battle() {
       });
       const data = await response.json();
       setItems(data);
-      console.log("START::", data);
     }
     fetchData();
   }, [oldItems]);

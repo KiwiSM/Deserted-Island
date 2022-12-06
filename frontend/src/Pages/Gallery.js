@@ -5,13 +5,15 @@ export default function Gallery() {
     const [items, setItems] = useState();
     const navigate = useNavigate();
 
-    useEffect(() => async function GetItems(){
-        const response = await fetch("https://deserted-island.onrender.com/all-items", {
-          method: "GET"
-        });
-        const data = await response.json();
-        console.log("GALLERY::", data);
-        setItems(data);
+    useEffect(() => {
+        const fetchData = async () => {
+          const response = await fetch("https://deserted-island.onrender.com/all-items", {
+            method: "GET"
+          });
+          const data = await response.json();
+          setItems(data);
+        }
+        fetchData();
       }, []);
 
     function ViewItem(item) {
